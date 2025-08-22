@@ -3,7 +3,7 @@ package secret
 import (
 	"context"
 	"encoding/json"
-	"errors"
+	"fmt"
 	"os"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -25,12 +25,12 @@ type CoinbaseSecretResponse struct {
 func GetCoinbaseSecret(ctx context.Context) (*CoinbaseSecretResponse, error) {
 	region, ok := os.LookupEnv(envRegion)
 	if !ok {
-		return nil, errors.New("secret: missing AWS_REGION environment variable")
+		return nil, fmt.Errorf("secret: missing %s environment variable", envRegion)
 	}
 
 	secretName, ok := os.LookupEnv(envSecretName)
 	if !ok {
-		return nil, errors.New("secret: missing COINBASE_SECRET_NAME environment variable")
+		return nil, fmt.Errorf("secret: missing %s environment variable", envSecretName)
 	}
 
 	cfg, err := config.LoadDefaultConfig(ctx, config.WithRegion(region))
