@@ -1,6 +1,7 @@
 package coinbase
 
 type Order struct {
+	Side      string `json:"side"`
 	ProductId string `json:"product_id"`
 	QuoteSize string `json:"quote_size"`
 }
